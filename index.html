@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Odin Recipies</title>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Odin Recipies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="shortcut icon" href="/fav.png" type="image/x-icon">
+  </head>
 
-<body>
-  <header>
-    <img src='/logo' alt="odin-recipes with a marker like font" />
-  </header>
-  <main>
-    <h1>Unleash Your Inner Chef</h1>
-    <p>
-      Discover a world of delicious flavors and easy-to-follow recipes that cater to every taste and skill level.
-      Whether you're a beginner or a seasoned cook, Odin Recipes has something special to inspire your next culinary
-      masterpiece.
-    </p>
-    <button>Explore Recipes Now</button>
-    <img src="/chicken" />
-    <img src="/fastfood" />
-  </main>
-  <footer></footer>
-</body>
+  <body>
+    <header class="center">
+      <a href="/" class="logo">
+        <img src='/logo.svg' alt="odin-recipes with a marker like font" width="370px" height="40px" />
+      </a>
+    </header>
+    <main>
+      <section class="hero center col visible">
+        <div>
+
+          <h1 class="main-header">Unleash Your <br/>Inner Chef</h1>
+          <p>
+            Experience the rich flavors of Egyptian cuisine with easy-to-follow recipes for every taste and skill level. Whether you're new to cooking or a seasoned chef, discover dishes that bring tradition and taste to your table.
+          </p>
+        </div>
+        <button>Explore Recipes Now</button>
+        <div class="center">
+          <img class="chicken" src="/chicken.svg" alt="a fried chicken in a box">
+          <img class="fast-food" src="/fast-food.svg" alt="a hamburger with a flag on it and a cola next to it">
+        </div>
+      </section>
+    </main>
+    <footer></footer>
+    <script type="module" src="src/main.js"></script>
+  </body>
 
 </html>
