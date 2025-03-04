@@ -57,14 +57,72 @@ function renderMainPage() {
 }
 
 async function renderDetialsPage(meal) {
-  const data = await fetch(
+  const d = await fetch(
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealsIds[meal]}`
   )
     .then((d) => d.json())
     .then((d) => d.meals[0]);
 
-  console.log(data);
-  app.innerHTML = `<h1>${data.strMeal}</h1>`;
+  function makeIngredients(meal) {
+    let ingredients = [];
+
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = meal[`strIngredient${i}`];
+      const measure = meal[`strMeasure${i}`];
+
+      if (ingredient && ingredient.trim() !== "")
+        ingredients.push([ingredient, measure]);
+    }
+
+    const ings = document.createElement("ul");
+    let content = ``;
+    for (let ing of ingredients)
+      content += `<li><span>${ing[0]}</span><span>${ing[1]}</span></li>`;
+    console.log(content);
+
+    ings.innerHTML = content;
+
+    return ings;
+  }
+
+  function makeInstructions(fullText) {
+    const lines = fullText.split(/\r\n|\n/).filter((l) => l.trim() !== "");
+    const listItems = lines.map((i) => `<li>${i}</li>`).join("");
+
+    return `<ul>${listItems}</ul>`;
+  }
+
+  function embedYoutubeVideo(url) {
+    const videoId = url.split("v=")[1];
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    const iframe = `<iframe width="560" height="315" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    return iframe;
+  }
+
+  const ings = makeIngredients(d);
+
+  app.innerHTML = `
+  <article>
+    <header>
+      <h1>${d.strMeal}</h1>
+      <span>Category: ${d.strCategory}</span>
+   </header>
+    <section>
+    <details>
+    <summary>Ingredients:</summary>
+    ${ings.outerHTML}
+    </details>
+  </section>
+  <section>
+  <h2>Let's Get Cooking!</h2>
+  ${makeInstructions(d.strInstructions)}
+  </section>
+  <section>
+  <h2>Prefer video?:</h2>
+  ${embedYoutubeVideo(d.strYoutube)}
+  </section>
+  </article>
+  `;
 }
 
 // returns a div of cups svg with gold ones as the rate says
@@ -141,10 +199,13 @@ function navigateTo(path, meal = "") {
 }
 
 navigateTo(pathName, decodeURIComponent(pathName.split("/").pop()));
-// TODO replace renderDetails to use names instead of ids
 
 window.addEventListener("popstate", (e) => {
   const path = window.location.pathname;
   const meal = e.state ? e.state.meal : null;
   navigateTo(path, meal);
 });
+
+// TODO: hero svgs animation
+// TODO: footer socials svgs animation
+// TODO: recs cards transition in mobile view
